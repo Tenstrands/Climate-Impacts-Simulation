@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>County Description</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1><%= county %> County</h1>
+
+    <!-- Display the result -->
+    <p><%= result %></p>
+    
+    <!-- Link to go back to the Home Page -->
+    <a href="/">Back to Home</a>
+    <a href="/fetch-high-heat?county=<%= encodeURIComponent(county) %>">High Heat</a>
+    <a href="/fetch-sea-level-rise?county=<%= encodeURIComponent(county) %>">Sea Level Rise</a>
+    <a href="/fetch-precipitation-and-storms?county=<%= encodeURIComponent(county) %>">Precipitation and Storms</a>
+    <a href="/fetch-wildfires?county=<%= encodeURIComponent(county) %>">Wildfires</a>
+
+
+</body>
+</html>

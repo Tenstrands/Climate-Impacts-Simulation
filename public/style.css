@@ -1,0 +1,18 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+nav a {
+    margin-right: 15px;
+}
+
+a {
+    display: block;        /* Makes each link occupy the full width and stack vertically */
+    /* margin-bottom: 10px;   /* Adds space between each link */
+    /* text-decoration: none; Removes underline (optional) */ 
+}

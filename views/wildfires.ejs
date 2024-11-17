@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildfires Page</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Wildfires <%= county %></h1>
+
+    <!-- Display the result -->
+    <p><%= result %></p>
+
+    <!-- Link to go back to the Home Page -->
+    <a href="/fetch-county?county=<%= encodeURIComponent(county) %>">Back</a>
+</body>
+</html>
