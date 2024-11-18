@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discrete Scale Slider</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content:center;
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            height: 100vh;
+        }
+        .container-mid {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 75%;
+        max-width: 1000px;
+        width: 100%;
+        background: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+        .slider-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .value-display {
+            font-size: 1.5em;
+            /* margin-top: 10px; */
+            color: #333;
+        }
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 50px;
+            font-size: 12;
+        }
+        .scale-labels span {
+            font-size: 0.9em;
+        }
+        .new-cont {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 90%;
+
+        }
+        #scaleSlider {
+            width: 90%;  /* Width of the slider */
+            -webkit-appearance: none; /* Remove default styling */
+            appearance: none;
+            height: 20px; /* Thicker track */
+            border-radius: 10px;
+            position: relative;
+            transition: background 0.3s ease; /* Smooth transition for background change */
+        }
+        #scaleSlider::-webkit-slider-thumb {
+            -webkit-appearance: none; /* Remove default thumb styling */
+            appearance: none;
+            width: 30px; /* Thumb size */
+            height: 30px;
+            border-radius: 50%;
+            background: #4adc4f; /* Thumb color */
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .button {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    gap: 8px;
+
+    position: relative;
+    width: 84px;
+    height: 50px;
+    left: 40%;
+    top: 5%;
+    border-radius: 8px;
+
+    /* Typography for text inside the button */
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%; /* Matches height */
+    color: #1E1E1E;
+
+    /* Additional styling */
+    /* border: 1.6px solid #1E1E1E; */
+    background-color: #54ef9a; /* Optional: add a white background */
+    cursor: pointer; /* Pointer cursor for buttons */
+}
+
+/* Styling for the arrow icon inside the button */
+.button.arrow-icon {
+    width: 16px;
+    height: 16px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+
+    /* Positioning the icon */
+    position: absolute;
+    left: 20.83%;
+    right: 20.83%;
+    top: 20.83%;
+    bottom: 20.83%;
+}
+
+/* Optional: Add hover effect for the button */
+.button:hover {
+    background-color: #F0F0F0;
+    /* border-color: #000000; */
+}
+
+.button:active {
+    background-color: #E0E0E0;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class = "container-mid">
+        <h2 style = "text-align: center;">On a scale of 1-10, what is your sense of
+            urgency to take action to mitigate the environmental
+           and climate crisis?</h2>
+       <div class="new-cont">
+           <div class="slider-container">
+               <input 
+                   type="range" 
+                   id="scaleSlider" 
+                   min="1" 
+                   max="10" 
+                   step="1" 
+                   value="5"
+                   style="width: 90%;"
+               >
+               
+               <div class="scale-labels">
+                   <span>1</span>
+                   <span>2</span>
+                   <span>3</span>
+                   <span>4</span>
+                   <span>5</span>
+                   <span>6</span>
+                   <span>7</span>
+                   <span>8</span>
+                   <span>9</span>
+                   <span>10</span>
+               </div>
+               <h3> You chose: </h3>
+               <div class="value-display" id="sliderValue">
+                   5
+               </div>
+           </div>
+       </div>
+       <button class = "button" onclick="goToNextPage()">Next
+           <span class="arrow-icon">&#8594;</span>
+        </button>
+
+    </div>
+    
+    
+
+    <script>
+        // JavaScript to update the slider value dynamically and change background color
+        const slider = document.getElementById('scaleSlider');
+        const sliderValue = document.getElementById('sliderValue');
+
+        // Function to update the background fill based on slider value
+        function updateSliderBackground() {
+            const value = slider.value;
+            const min = slider.min;
+            const max = slider.max;
+            const percentage = ((value - min) / (max - min)) * 100;
+
+            // Set background to fill based on the percentage of the value
+            slider.style.background = `linear-gradient(to right, #4CAF50 ${percentage}%, #ddd ${percentage}%)`;
+        }
+
+        // Initialize slider value and background on page load
+        updateSliderBackground();
+        function goToNextPage() {
+    window.location.href = "dashboardcop.html"; // Replace 'nextPage.html' with the target page URL
+}
+
+        // Update background color dynamically as the slider moves
+        slider.addEventListener('input', () => {
+            sliderValue.textContent = slider.value;
+            updateSliderBackground(); // Update background color dynamically as the slider is moved
+        });
+    </script>
+</body>
+</html>
