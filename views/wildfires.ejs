@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Wildfires <%= county %></h1>
+<div class="container">
+    <div id="text">Wildfires <%= county %></div>
 
     <!-- Display the result -->
-    <p><%= result %></p>
+    <div id="text"><%= result %></div>
 
     <!-- Link to go back to the Home Page -->
-    <a href="/fetch-county?county=<%= encodeURIComponent(county) %>">Back</a>
+    <div id="option-buttons" class="btngrid">
+    <form action="/fetch-county" method="GET">
+        <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
+        <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <button type="submit" class="bttn">Back</button>
+    </form>
+    </div>
+</div>
 </body>
 </html>

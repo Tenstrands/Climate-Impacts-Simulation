@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));  // To parse form data from POS
 // Route for Home Page, api call to get list of counties 
 app.get('/', async (req, res) => {
     try {
-      const county_list_range = "CIS Data and Tracker!A:A"
+      const county_list_range = "CIS Data and Tracker!A2:A"
       const county_list_rows = await fetchSheetData(county_list_range);
   
       // Extract the dropdown options from the first column
@@ -33,25 +33,26 @@ app.get('/', async (req, res) => {
 //POST for selecting a county 
 app.post('/set-county', (req, res) => {
     const selectedCounty = req.body.county;  // Get the selected county from the form  
-    res.redirect(`/fetch-county?county=${encodeURIComponent(selectedCounty)}`);
+    const selectedYear = req.body.year;
+    res.redirect(`/fetch-county?county=${encodeURIComponent(selectedCounty)}&year=${encodeURIComponent(selectedYear)}`);
   });
 
-//redirect to high_heat path 
+//get data for county description 
 app.get('/fetch-county', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
-    // const range = "COUNTY High Heat!A:T";  // Change this range as necessary
-    const range = "CIS Data and Tracker!A:B";  // Change this range as necessary
+    const selectedYear = req.query.year;
+    const range = "CIS Data and Tracker!A2:B";  // Change this range as necessary
 
     try {
         const rows = await fetchSheetData(range);
         let result = getDataForCounty(rows, selectedCounty, 1);
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/county_description?county=${selectedCounty}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/county_description?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/county_description?county=${selectedCounty}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/county_description?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -59,25 +60,44 @@ app.get('/fetch-county', async (req, res) => {
 app.get('/county_description', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
+    const selectedYear = req.query.year;
 
-    res.render('county_description', { county, result });
+    res.render('county_description', { county, selectedYear, result });
 });
 
 //get info for high heat route
 app.get('/fetch-high-heat', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
-    const range = "COUNTY High Heat!A:T";  // Change this range as necessary
+    const selectedYear = req.query.year;
+    const range = "COUNTY High Heat!A2:T";  // Change this range as necessary
 
     try {
         const rows = await fetchSheetData(range);
-        let result = getDataForCounty(rows, selectedCounty, 16);
+        let result;
+        switch(selectedYear) {
+            case "2025":
+                result = getDataForCounty(rows, selectedCounty, 16);
+                break;
+            case "2035":
+                result = getDataForCounty(rows, selectedCounty, 17);
+                break;
+            case "2045":
+                result = getDataForCounty(rows, selectedCounty, 18);
+                break;
+            case "2055":
+                result = getDataForCounty(rows, selectedCounty, 19);
+                break;
+            default:
+                throw new Error(`Invalid year selected: ${selectedYear}`);
+
+        }   
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/high_heat?county=${selectedCounty}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/high_heat?county=${selectedCounty}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -85,26 +105,43 @@ app.get('/fetch-high-heat', async (req, res) => {
 app.get('/high_heat', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
-
-    res.render('high_heat', { county, result });
+    const selectedYear = req.query.year
+    res.render('high_heat', { county, selectedYear, result });
 });
 
 
 //get info for sea level rise route
 app.get('/fetch-sea-level-rise', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
-    const range = "COUNTY Sea Level Rise!A:L";  // Change this range as necessary
+    const selectedYear = req.query.year;
+    const range = "COUNTY Sea Level Rise!A2:L";  // Change this range as necessary
 
     try {
         const rows = await fetchSheetData(range);
-        let result = getDataForCounty(rows, selectedCounty, 8);
+        let result;
+        switch(selectedYear) {
+            case "2025":
+                result = getDataForCounty(rows, selectedCounty, 8);
+                break;
+            case "2035":
+                result = getDataForCounty(rows, selectedCounty, 9);
+                break;
+            case "2045":
+                result = getDataForCounty(rows, selectedCounty, 10);
+                break;
+            case "2055":
+                result = getDataForCounty(rows, selectedCounty, 11);
+                break;
+            default:
+                throw new Error(`Invalid year selected: ${selectedYear}`);
 
-        // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/sea_level_rise?county=${selectedCounty}&result=${encodeURIComponent(result || "No result found")}`);
+        }
+
+        res.redirect(`/sea_level_rise?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/sea_level_rise?county=${selectedCounty}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/sea_level_rise?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -112,26 +149,45 @@ app.get('/fetch-sea-level-rise', async (req, res) => {
 app.get('/sea_level_rise', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
+    const selectedYear = req.query.year;
 
-    res.render('sea_level_rise', { county, result });
+    res.render('sea_level_rise', { county, result, selectedYear });
 });
 
 
 //get info for precipitation_and_storms route
 app.get('/fetch-precipitation-and-storms', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
-    const range = "COUNTY Precipitation and Storms!A:AF";  // Change this range as necessary
+    const range = "COUNTY Precipitation and Storms!A2:AF";  // Change this range as necessary
+    const selectedYear = req.query.year;
 
     try {
         const rows = await fetchSheetData(range);
-        let result = getDataForCounty(rows, selectedCounty, 28);
+        let result;
+        switch(selectedYear) {
+            case "2025":
+                result = getDataForCounty(rows, selectedCounty, 28);
+                break;
+            case "2035":
+                result = getDataForCounty(rows, selectedCounty, 29);
+                break;
+            case "2045":
+                result = getDataForCounty(rows, selectedCounty, 30);
+                break;
+            case "2055":
+                result = getDataForCounty(rows, selectedCounty, 31);
+                break;
+            default:
+                throw new Error(`Invalid year selected: ${selectedYear}`);
+
+        }
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -139,25 +195,43 @@ app.get('/fetch-precipitation-and-storms', async (req, res) => {
 app.get('/precipitation_and_storms', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
-
-    res.render('precipitation_and_storms', { county, result });
+    const selectedYear = req.query.year;
+    res.render('precipitation_and_storms', { county, result, selectedYear });
 });
 
 //get info for wildfires route
 app.get('/fetch-wildfires', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
-    const range = "COUNTY Wildfires!A:U";  // Change this range as necessary
+    const range = "COUNTY Wildfires!A2:U";  // Change this range as necessary
+    const selectedYear = req.query.year;
 
     try {
         const rows = await fetchSheetData(range);
-        let result = getDataForCounty(rows, selectedCounty, 17);
+        let result;
+        switch(selectedYear) {
+            case "2025":
+                result = getDataForCounty(rows, selectedCounty, 17);
+                break;
+            case "2035":
+                result = getDataForCounty(rows, selectedCounty, 18);
+                break;
+            case "2045":
+                result = getDataForCounty(rows, selectedCounty, 19);
+                break;
+            case "2055":
+                result = getDataForCounty(rows, selectedCounty, 20);
+                break;
+            default:
+                throw new Error(`Invalid year selected: ${selectedYear}`);
+
+        }
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/wildfires?county=${selectedCounty}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/wildfires?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/wildfires?county=${selectedCounty}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/wildfires?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -165,8 +239,15 @@ app.get('/fetch-wildfires', async (req, res) => {
 app.get('/wildfires', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
+    const selectedYear = req.query.year;
+    res.render('wildfires', { county, result, selectedYear });
+});
 
-    res.render('wildfires', { county, result });
+// Route for reflection
+app.get('/reflection', (req, res) => {
+    const county = req.query.county; // Get county from query parameter
+    const selectedYear = req.query.year;
+    res.render('reflection', { county, selectedYear });
 });
 
 // Start the server

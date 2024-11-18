@@ -7,13 +7,19 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>High Heat <%= county %></h1>
+    <div class="container">
+    <div id="text">High Heat <%= county %></div>
 
     <!-- Display the result -->
-    <p><%= result %></p>
+    <div id="text"><%= result %></div>
 
     <!-- Link to go back to the Home Page -->
-    <a href="/fetch-county?county=<%= encodeURIComponent(county) %>">Back</a>
-
+    <!-- <a href="/fetch-county?county=<%= encodeURIComponent(county) %>&year=<%= encodeURIComponent(selectedYear) %>">Back</a> -->
+    <form action="/fetch-county" method="GET">
+        <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
+        <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <button type="submit" class="bttn">Back</button>
+    </form>
+</div>
 </body>
 </html>
