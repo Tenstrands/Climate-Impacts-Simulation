@@ -38,9 +38,9 @@ body {
 .container {
     width: 800px;
     max-width: 80%;
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px 2px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .btn-grid {
@@ -84,5 +84,114 @@ ul {
     background: #cccccc;
   }
   
+
+  .content-wrapper {
+    display: flex;
+    align-items: center;
+    max-width: 900px;
+    width: 90%;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eeeeee;
+    padding: 20px;
+  }
+  
+  .image-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .form-section {
+    flex: 1;
+    padding: 20px;
+  }
   
 
+
+
+
+
+
+
+
+
+/* Styling for the sentiment container */
+
+.container-mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 800px;
+    max-width: 90%;
+    padding: 20px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Ensure the parent container (.new-cont) spans the full width */
+.new-cont {
+    width: 100%; /* Make .new-cont take the full width of its parent */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Slider container adjusted for proper alignment */
+.slider-container {
+    width: 100%; /* Matches the width of .new-cont */
+    margin: 20px 0;
+    position: relative; /* Allows precise positioning of labels */
+}
+
+/* Slider styled to fill the container */
+#scaleSlider {
+    width: 100%; /* Full width of the parent container */
+    appearance: none; /* Remove default browser styling */
+    height: 10px; /* Track height */
+    background: #dddddd; /* Track color */
+    border-radius: 5px; /* Rounded corners */
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+/* Slider thumb (handle) styling */
+#scaleSlider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px; /* Thumb size */
+    height: 20px;
+    background: #54ef9a; /* Thumb color */
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+/* Labels under the slider aligned properly */
+.scale-labels {
+    display: grid; /* Use grid layout for precise alignment */
+    grid-template-columns: repeat(10, 1fr); /* Create 10 evenly spaced columns */
+    width: 100%; /* Match the slider width */
+    margin-top: 10px; /* Ensure labels are spaced below the slider */
+    font-size: 0.9rem;
+    color: #666666;
+    pointer-events: none; /* Prevent labels from interfering with slider interaction */
+}
+
+/* Individual label styling */
+.scale-labels span {
+    text-align: center; /* Center-align text within each grid cell */
+}

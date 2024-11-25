@@ -265,16 +265,16 @@ app.post('/rank-concerns', (req, res) => {
         // Redirect based on the highest concern
         switch (highestConcern) {
             case 'high_heat':
-                res.redirect('/high_heat');
+                res.redirect('/dashboard');
                 break;
-            case 'rainfall':
-                res.redirect('/precipitation_and_torms');
+            case 'precipitation_and_rainfall':
+                res.redirect('/dashboard');
                 break;
             case 'wildfires':
-                res.redirect('/wildfires');
+                res.redirect('/dashboard');
                 break;
-            case 'flooding':
-                res.redirect('/sea_level_rise');
+            case 'sea_level_rise':
+                res.redirect('/dashboard');
                 break;
             default:
                 res.status(400).send('Invalid ranking result');
@@ -284,6 +284,40 @@ app.post('/rank-concerns', (req, res) => {
     }
 });
 
+//route to get to sentiment page
+app.get('/sentiment', (req, res) => {
+    const county = req.query.county 
+    const selectedYear = req.query.year 
+
+    res.render('sentiment', { county, selectedYear });
+});
+
+
+ // Route to handle storing sentiment data + routing to next page
+app.post('/store-sentiment', async (req, res) => {
+    const { county, year, sliderValue } = req.body;
+
+    try {
+        // Prepare data to append to Google Sheets
+        // const range = 'Reflection!A2:C'; // Update with your actual sheet range
+        // const values = [[county, year, sliderValue]];
+
+        // Append data to Google Sheets
+        // await appendToGoogleSheet(range, values);
+
+        // Redirect to the next page
+        res.redirect(`/rank-concerns?county=${encodeURIComponent(county)}&year=${encodeURIComponent(year)}`);
+    } catch (error) {
+        console.error('Error storing sentiment data:', error);
+        res.status(500).send('Error saving your reflection.');
+    }
+});
+
+
+// Route to dashboard page
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard');
+});
 
 // Start the server
 app.listen(port, () => {
