@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Climate Impact Simulation</h1>
+
+    <!-- Dropdown for selecting county -->
+    <form action="/set-county" method="POST">
+        <label for="county">County:</label>
+        <select name="county" id="county">
+            <!-- Loop through the counties passed from the controller -->
+            <% counties.forEach(function(county) { %>
+                <option value="<%= county %>"><%= county %></option>
+            <% }); %>
+        </select>
+
+        <label for="year">Year:</label>
+        <select name="year" id="year">
+            <option value="2025">2025</option>
+            <option value="2035">2035</option>
+            <option value="2045">2045</option>
+            <option value="2055">2055</option>
+        </select>
+        
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>

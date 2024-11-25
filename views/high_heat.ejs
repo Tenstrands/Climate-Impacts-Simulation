@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Heat Page</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+    <div id="text">High Heat <%= county %></div>
+
+    <!-- Display the result -->
+    <div id="text"><%= result %></div>
+
+    <!-- Link to go back to the Home Page -->
+    <!-- <a href="/fetch-county?county=<%= encodeURIComponent(county) %>&year=<%= encodeURIComponent(selectedYear) %>">Back</a> -->
+    <form action="/fetch-county" method="GET">
+        <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
+        <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <button type="submit" class="bttn">Back</button>
+    </form>
+</div>
+</body>
+</html>
