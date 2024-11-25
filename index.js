@@ -250,7 +250,45 @@ app.get('/reflection', (req, res) => {
     res.render('reflection', { county, selectedYear });
 });
 
+
+// Route to display ranking page
+app.get('/rank-concerns', (req, res) => {
+    res.render('rank_concerns');
+});
+
+// Route to handle ranked concerns
+app.post('/rank-concerns', (req, res) => {
+    const rankedConcerns = JSON.parse(req.body.rankedConcerns || '[]');
+    
+    if (rankedConcerns.length > 0) {
+        const highestConcern = rankedConcerns[0]; // Get the top-ranked concern
+        // Redirect based on the highest concern
+        switch (highestConcern) {
+            case 'high_heat':
+                res.redirect('/high_heat');
+                break;
+            case 'rainfall':
+                res.redirect('/precipitation_and_torms');
+                break;
+            case 'wildfires':
+                res.redirect('/wildfires');
+                break;
+            case 'flooding':
+                res.redirect('/sea_level_rise');
+                break;
+            default:
+                res.status(400).send('Invalid ranking result');
+        }
+    } else {
+        res.status(400).send('Ranking data is missing or invalid');
+    }
+});
+
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+

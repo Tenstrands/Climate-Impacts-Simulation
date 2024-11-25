@@ -27,7 +27,9 @@
         </div>
 
 
-        <form action="/" method="GET">
+        <form action="/rank-concerns" method="GET">
+            <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
+            <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
             <button type="submit" class="bttn">Next</button>
         </form>
 

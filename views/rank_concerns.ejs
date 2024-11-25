@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rank Concerns</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Rank Your Concerns</h1>
+        <p>Drag and drop to rank the concerns from most to least concerning:</p>
+        <form action="/rank-concerns" method="POST">
+          <ul id="rankList">
+            <li class="rank-item" data-value="high_heat">High Heat</li>
+            <li class="rank-item" data-value="precipitation_and_rainfall">Precipitation and Rainfall</li>
+            <li class="rank-item" data-value="wildfires">Wildfires</li>
+            <li class="rank-item" data-value="sea_level_rise">Sea Level Rise</li>
+          </ul>
+          <input type="hidden" name="rankedConcerns" id="rankedConcerns">
+          <button type="submit" id="nextButton">Next</button>
+        </form>
+      </div>
+    
+      <script>
+        const rankList = document.getElementById('rankList');
+        const rankedConcernsInput = document.getElementById('rankedConcerns');
+    
+        // Initialize SortableJS on the list
+        new Sortable(rankList, {
+          animation: 150,
+          onEnd: () => {
+            const items = Array.from(rankList.children);
+            const rankedValues = items.map(item => item.getAttribute('data-value'));
+            rankedConcernsInput.value = JSON.stringify(rankedValues);
+          }
+        });
+      </script>  
+</body>
+</html>
