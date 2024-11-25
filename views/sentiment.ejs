@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflection</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container-mid">
+        <h2 style="text-align: center;">
+            On a scale of 1-10, what is your sense of urgency to take action to mitigate the environmental and climate crisis?
+        </h2>
+        <div class="new-cont">
+            <div class="slider-container">
+                <input 
+                    type="range" 
+                    id="scaleSlider" 
+                    name="urgency" 
+                    min="1" 
+                    max="10" 
+                    step="1" 
+                    value="5"
+                    style="width: 90%;"
+                >
+                <div class="scale-labels">
+                    <% for (let i = 1; i <= 10; i++) { %>
+                        <span><%= i %></span>
+                    <% } %>
+                </div>
+                <h3>You chose:</h3>
+                <div class="value-display" id="sliderValue">5</div>
+            </div>
+        </div>
+        <form action="/store-sentiment" method="POST">
+            <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
+            <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+            <input type="hidden" id="sliderValueInput" name="sliderValue">
+            <button type="submit" class="button">Next</button>
+        </form>
+    </div>
+
+    <script>
+        const slider = document.getElementById('scaleSlider');
+        const sliderValueDisplay = document.getElementById('sliderValue');
+        const sliderValueInput = document.getElementById('sliderValueInput');
+
+        // Update the visible slider value and the hidden input field
+        slider.addEventListener('input', () => {
+            sliderValueDisplay.textContent = slider.value;
+            sliderValueInput.value = slider.value;
+        });
+
+        // Initialize the hidden input with the default slider value
+        sliderValueInput.value = slider.value;
+    </script>
+</body>
+</html>

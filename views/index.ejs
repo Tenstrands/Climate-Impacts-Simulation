@@ -7,29 +7,35 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div class="container">
-    <h1>Climate Impact Simulation</h1>
-
-    <!-- Dropdown for selecting county -->
-    <form action="/set-county" method="POST">
-        <label for="county">County:</label>
-        <select name="county" id="county">
-            <!-- Loop through the counties passed from the controller -->
-            <% counties.forEach(function(county) { %>
-                <option value="<%= county %>"><%= county %></option>
-            <% }); %>
-        </select>
-
-        <label for="year">Year:</label>
-        <select name="year" id="year">
-            <option value="2025">2025</option>
-            <option value="2035">2035</option>
-            <option value="2045">2045</option>
-            <option value="2055">2055</option>
-        </select>
-        
-        <button type="submit">Submit</button>
-    </form>
-</div>
+    <body>
+        <div class="container">
+          <div class="content-wrapper">
+            <!-- Left Section: Image -->
+            <div class="image-section">
+              <img src="/images/California_county_map_(labeled).svg.png" alt="California County Map">
+            </div>
+      
+            <!-- Right Section: Title and Dropdown -->
+            <div class="form-section">
+              <h1>Climate Impacts Simulation</h1>
+              <form action="/set-county" method="POST">
+                <label for="county">Choose a County:</label>
+                <select id="county" name="county" required>
+                  <% counties.forEach(county => { %>
+                    <option value="<%= county %>"><%= county %></option>
+                  <% }) %>
+                </select>
+                <label for="year">Choose a Year:</label>
+                <select id="year" name="year" required>
+                  <option value="2025">2025</option>
+                  <option value="2035">2035</option>
+                  <option value="2045">2045</option>
+                  <option value="2055">2055</option>
+                </select>
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
 </body>
 </html>
