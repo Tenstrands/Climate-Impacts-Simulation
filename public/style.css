@@ -225,6 +225,73 @@ form {
     text-align: center; /* Center-align text within each grid cell */
 }
 
+.dashcontainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Create 2 columns of equal width */
+  gap: 10px; /* Space between the boxes */
+  width: 100%; 
+  margin: auto; 
+  height: 100%;
+  
+}
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 20px;
+  }
+.resource{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+.response-box{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    height: 100px;
+    width: 400px;
+    background-color: rgba(159, 203, 240, 0.4);
+}
+.response {
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: normal;
+    color: #333; /* Color of the text */
+    margin-left: 20px;
+}
+
+.response strong {
+    /* font-size: 20px; */
+    font-weight: bold;
+}
+
+.scale, .sentiment {
+    font-size: 16px;
+    margin-left: 10px;
+    display: block;
+}
+  
+  
+  .another{
+    top:100px;
+    height: 200px;
+  }
+  
+
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+
 
 
 
@@ -286,4 +353,5 @@ form {
 .button-4:-webkit-details-marker {
   display: none;
 }
+
 
