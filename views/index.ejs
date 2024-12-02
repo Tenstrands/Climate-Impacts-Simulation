@@ -19,14 +19,25 @@
             <div class="form-section">
               <h1>Climate Impacts Simulation</h1>
               <form action="/set-county" method="POST">
+                <!-- Country Dropdown -->
                 <label for="county">Choose a County:</label>
                 <select id="county" name="county" required>
+                  <option value="">-- Select a County --</option>
                   <% counties.forEach(county => { %>
                     <option value="<%= county %>"><%= county %></option>
                   <% }) %>
                 </select>
+
+                <!-- Biome Dropdown -->
+                <label for="biome">Choose a Biome:</label>
+                <select id="biome" name="biome" required>
+                    <option value="">-- Select a Biome --</option>
+                </select>
+
+                <!-- Year Dropdown -->
                 <label for="year">Choose a Year:</label>
                 <select id="year" name="year" required>
+                  <option value="">-- Select a Year --</option>
                   <option value="2025">2025</option>
                   <option value="2035">2035</option>
                   <option value="2045">2045</option>
@@ -37,5 +48,95 @@
             </div>
           </div>
         </div>
+
+
+
+        <!-- Script for Dynamic Dropdown for Biome -->
+    <script>
+      // Sample data: Mapping of countries to biomes
+        const countyBiomeMapping = {
+      "Alameda": ["Urban", "Coastal", "Grassland"],
+      "Alpine": ["Mountain", "Forest"],
+      "Amador": ["Forest", "Grassland"],
+      "Butte": ["Forest", "Grassland", "Urban"],
+      "Calaveras": ["Forest", "Grassland"],
+      "Colusa": ["Agricultural Lands", "Grassland"],
+      "Contra Costa": ["Urban", "Coastal", "Grassland"],
+      "Del Norte": ["Coastal", "Forest"],
+      "El Dorado": ["Forest", "Mountain"],
+      "Fresno": ["Agricultural Lands", "Mountain", "Grassland"],
+      "Glenn": ["Agricultural Lands", "Grassland"],
+      "Humboldt": ["Coastal", "Forest"],
+      "Imperial": ["Desert", "Agricultural Lands"],
+      "Inyo": ["Desert", "Mountain"],
+      "Kern": ["Desert", "Agricultural Lands", "Mountain"],
+      "Kings": ["Agricultural Lands", "Grassland"],
+      "Lake": ["Forest", "Grassland"],
+      "Lassen": ["Mountain", "Forest", "Grassland"],
+      "Los Angeles": ["Urban", "Coastal", "Mountain", "Desert edges"],
+      "Madera": ["Agricultural Lands", "Mountain"],
+      "Marin": ["Coastal", "Forest", "Grassland"],
+      "Mariposa": ["Mountain", "Forest"],
+      "Mendocino": ["Coastal", "Forest"],
+      "Merced": ["Agricultural Lands", "Grassland"],
+      "Modoc": ["Grassland", "Forest"],
+      "Mono": ["Mountain", "Desert edges"],
+      "Monterey": ["Coastal", "Agricultural Lands", "Grassland", "Forest"],
+      "Napa": ["Agricultural Lands (vineyards)", "Grassland"],
+      "Nevada": ["Forest", "Mountain"],
+      "Orange": ["Urban", "Coastal"],
+      "Placer": ["Forest", "Mountain", "Urban edges"],
+      "Plumas": ["Forest", "Mountain"],
+      "Riverside": ["Desert", "Urban", "Mountain edges"],
+      "Sacramento": ["Urban", "Agricultural Lands"],
+      "San Benito": ["Agricultural Lands", "Grassland", "Mountain"],
+      "San Bernardino": ["Desert", "Mountain", "Urban edges"],
+      "San Diego": ["Coastal", "Desert", "Urban", "Mountain edges"],
+      "San Francisco": ["Urban", "Coastal"],
+      "San Joaquin": ["Agricultural Lands", "Urban"],
+      "San Luis Obispo": ["Coastal", "Agricultural Lands", "Grassland"],
+      "San Mateo": ["Coastal", "Urban", "Forest edges"],
+      "Santa Barbara": ["Coastal", "Mountain", "Agricultural Lands"],
+      "Santa Clara": ["Urban", "Grassland", "Agricultural Lands", "Mountain edges"],
+      "Santa Cruz": ["Coastal", "Forest"],
+      "Shasta": ["Forest", "Mountain"],
+      "Sierra": ["Mountain", "Forest"],
+      "Siskiyou": ["Mountain", "Forest", "Grassland"],
+      "Solano": ["Agricultural Lands", "Urban", "Coastal edges"],
+      "Sonoma": ["Coastal", "Agricultural Lands (vineyards)", "Grassland"],
+      "Stanislaus": ["Agricultural Lands", "Grassland"],
+      "Sutter": ["Agricultural Lands", "Grassland"],
+      "Tehama": ["Grassland", "Forest"],
+      "Trinity": ["Mountain", "Forest"],
+      "Tulare": ["Agricultural Lands", "Mountain", "Grassland"],
+      "Tuolumne": ["Mountain", "Forest"],
+      "Ventura": ["Coastal", "Agricultural Lands", "Mountain"],
+      "Yolo": ["Agricultural Lands", "Grassland"],
+      "Yuba": ["Forest", "Grassland"]
+  };
+
+
+      const countySelect = document.getElementById('county');
+      const biomeSelect = document.getElementById('biome');
+
+      // Listen for changes to the "County" dropdown
+      countySelect.addEventListener('change', () => {
+          // Clear the current biome options
+          biomeSelect.innerHTML = '<option value="">-- Select a Biome --</option>';
+
+          // Get the selected country
+          const selectedCounty = countySelect.value;
+
+          // Populate biomes based on the selected country
+          if (countyBiomeMapping[selectedCounty]) {
+            countyBiomeMapping[selectedCounty].forEach(biome => {
+                  const option = document.createElement('option');
+                  option.value = biome;
+                  option.textContent = biome;
+                  biomeSelect.appendChild(option);
+              });
+          }
+      });
+  </script>
 </body>
 </html>
