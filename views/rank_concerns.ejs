@@ -34,6 +34,9 @@
             const items = Array.from(rankList.children);
             const rankedValues = items.map(item => item.getAttribute('data-value'));
             rankedConcernsInput.value = JSON.stringify(rankedValues);
+            // Store the top-ranked concern in localStorage
+            const topConcern = rankedValues[0];
+            localStorage.setItem('topConcern', topConcern);  // Store the top concern
           }
         });
       </script>  
