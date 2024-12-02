@@ -19,10 +19,22 @@ a {
   */
 
 
+text {
+ margin-bottom: 10px;
+}
 
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+h1 {
+  font-family: 'Inter', Arial, sans-serif;
+  text-align: center;
+}
+
+label {
+  font-family: 'Inter', Arial, sans-serif;
 }
 
 body {
@@ -44,28 +56,33 @@ body {
 }
 
 .btn-grid {
-    display: grid;
-    grid-template-columns: repeat(2, auto) ;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
     margin-top: 20px;
-}
+} 
 
 
 
 .btn {
-    /* background-color: hsl(200, 100%, 50%); */
-    /* border: 1px solid hsl(200, 100%, 50%); */
     border-radius: 5px;
     padding: 5px 10px;
     color: white;
     outline: none;
+    gap: 10px;
+    margin-top: 10px;
 }
+
+
 
 
 ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
   
   .rank-item {
@@ -112,9 +129,21 @@ ul {
   }
   
   .form-section {
-    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 15px; /* Add spacing between elements */
     padding: 20px;
-  }
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Ensure the form's contents stack vertically */
+    gap: 10px; /* Add spacing between each form item */
+}
+
+
+
+
   
 
 
@@ -173,7 +202,7 @@ ul {
     appearance: none;
     width: 20px; /* Thumb size */
     height: 20px;
-    background: #54ef9a; /* Thumb color */
+    background: #7aa7c7; /* Thumb color */
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -195,6 +224,7 @@ ul {
 .scale-labels span {
     text-align: center; /* Center-align text within each grid cell */
 }
+
 .dashcontainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Create 2 columns of equal width */
@@ -260,3 +290,68 @@ ul {
     margin-bottom: 5px;
     text-align: center;
 }
+
+
+
+
+
+.button-4 {
+  appearance: none;
+  background-color: #FAFBFC;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292E;
+  cursor: pointer;
+  display: block;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  width: 100%;
+  font-size: 14px;
+  /* font-weight: 500; */
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  position: relative;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.button-4:hover {
+  background-color: #F3F4F6;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+.button-4:disabled {
+  background-color: #FAFBFC;
+  border-color: rgba(27, 31, 35, 0.15);
+  color: #959DA5;
+  cursor: default;
+}
+
+.button-4:active {
+  background-color: #EDEFF2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
+  cursor: grabbing;
+}
+
+.button-4:focus {
+  outline: 1px transparent;
+}
+
+.button-4:before {
+  display: none;
+}
+
+.button-4:-webkit-details-marker {
+  display: none;
+}
+
+

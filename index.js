@@ -34,13 +34,15 @@ app.get('/', async (req, res) => {
 app.post('/set-county', (req, res) => {
     const selectedCounty = req.body.county;  // Get the selected county from the form  
     const selectedYear = req.body.year;
-    res.redirect(`/fetch-county?county=${encodeURIComponent(selectedCounty)}&year=${encodeURIComponent(selectedYear)}`);
+    const selectedBiome = req.body.biome;
+    res.redirect(`/fetch-county?county=${encodeURIComponent(selectedCounty)}&biome=${encodeURIComponent(selectedBiome)}&year=${encodeURIComponent(selectedYear)}`);
   });
 
 //get data for county description 
 app.get('/fetch-county', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
     const selectedYear = req.query.year;
+    const selectedBiome = req.query.biome;
     const range = "CIS Data and Tracker!A2:B";  // Change this range as necessary
 
     try {
@@ -48,7 +50,7 @@ app.get('/fetch-county', async (req, res) => {
         let result = getDataForCounty(rows, selectedCounty, 1);
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/county_description?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/county_description?county=${selectedCounty}&biome=${encodeURIComponent(selectedBiome)}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
