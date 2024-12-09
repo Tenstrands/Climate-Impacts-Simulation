@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <div class = 'dashcontainer'>
-            <div id = 'resources' class = 'box' style = 'background-color: antiquewhite; height: 100%'>
+            <div id = 'resources' class = 'box' style = 'height: 100%;'>
                 <h3>
                     Resources based on responses
                 </h3>
@@ -19,16 +19,12 @@
             <div class = 'resource' >
                 <strong>What Now?</strong>
                 <div class = "response">
-                    <p style = "font-size: 16px;text-align: center;font-weight: 100;">It's not too late to address climate change. By exploring available resources, we can better understand these urgent issues and take meaningful action toward a sustainable, healthier future for all.
+                    <p style = "font-size: 16px;text-align: center;font-weight: 300; color: black;">It's not too late to address climate change. By exploring available resources, we can better understand these urgent issues and take meaningful action toward a sustainable, healthier future for all.
                     </p>
                     <p style = "font-weight: 700;"> General Resources:</p>
                     <a href="https://sites.google.com/tenstrands.org/ca-envlit-scrs-data-project/explore-data-focus-areas/broader-context-factors/climate-impacts-broader-context?authuser=2"> Data Initiative for Environmental and Climate Action in California's TK–12 Schools</a>
                 </div> 
                 <br>
-
-                <div>
-                    <p style = "font-weight: 700;"> County Specific Resources:</p>
-                </div>
             </div>
             
         </div >
@@ -44,17 +40,86 @@
         // Display relevant resources based on the top concern
         const resourcesDiv = document.getElementById('resources');
         if (topConcern === 'high_heat') {
-            resourcesDiv.innerHTML = "<p>Resource about High Heat in your county...</p>";
+            resourcesDiv.innerHTML = `<h1>High Heat Resources</h1>
+    <ul>
+        <li>
+            <strong>
+                <a href="https://innovation.luskin.ucla.edu/" target="_blank">UCLA Luskin Center for Innovation's Guidance for an Equitable and Effective Extreme Heat Strategy in California</a>
+            </strong>
+            and Policy Brief Resources: Of special note for educators are the resources regarding high heat and schools.
+        </li>
+        <li>
+            <a href="http://www.tinyurl.com/HeatResilientSchools-2023" target="_blank"><strong>December 2023 High Heat Virtual Policy Forum with UCLA</strong></a>
+            
+        </li>
+        <li>
+            <a href="https://www.americaisallin.com/all-in-on-climate-resilience" target="_blank"><strong>American is All In July 2024 Webinar:</strong></a>
+        </li>
+        <li>
+            <strong>
+                <a href="https://www.weather.gov/safety/heat-index" target="_blank">National Weather Service Heat Index</a>
+            </strong>: The heat index, also known as the apparent temperature, is what the temperature feels like to the human body when relative humidity is combined with the air temperature, and includes considerations for when people are exposed to direct sunlight. The heat index has supported this initiative with identifying <strong>87 Degrees Fahrenheit</strong> as a key temperature for caution.
+        </li>
+    </ul>`;
         } else if (topConcern === 'precipitation_and_rainfall') {
-            resourcesDiv.innerHTML = "<p>Resource about Precipitation and Rainfall...</p>";
+            resourcesDiv.innerHTML = `<h1> Extreme Precipitation and Storms Resources</h1>
+            <h3>Readiness and Emergency Management for Schools (REMS) Phases of Emergency Planning</h3>
+    
+   <p>  It is recommended to consider all of the Readiness and Emergency Management for Schools (REMS) phases of emergency planning: </p>
+    <ul>
+        <li><strong>Prevent (Mitigate):</strong> This prevention (or mitigation) phase involves taking actions to reduce or eliminate risks and hazards before they happen.</li>
+        <li><strong>Preparedness:</strong>The preparedness phase involves developing plans and procedures to ensure schools are ready to respond to emergencies.</li>
+        <li><strong>Respond:</strong> 
+            The response phase takes place during an actual emergency, when schools take immediate action to protect students, staff, and visitors.
+            </li>
+        <li><strong>Recovery:</strong> 
+            The recovery phase happens after the immediate emergency is over, and is focused on restoring the physical environment, and supporting students, families, and employees to return to learning routines as soon as possible.
+            </li>
+    </ul>
+    <h3>Stormwater Management in San Carlos School District</h3>
+    <p>The San Carlos School District partnered with their local stormwater management county agency partner, Flows to Bay, to mitigate and prepare for storm-based flooding.</p>
+    <p>Learn more about what they are doing by reading the <a href="URL_to_the_spotlight_feature" target="_blank">Spotlight Feature from September 2024: Stormwater Management in San Carlos School District</a>.</p>
+            `;
         } else if (topConcern === 'wildfires') {
-            resourcesDiv.innerHTML = "<p>Resource about Wildfires...</p>";
+            resourcesDiv.innerHTML = `<h1> Wildfire Resources</h1>
+            <h3>Readiness and Emergency Management for Schools (REMS) Phases of Emergency Planning</h3>
+    
+    <p>It is recommended to consider all of the Readiness and Emergency Management for Schools (REMS) phases of emergency planning:</p>
+    <ul>
+        <li><strong>Prevent (Mitigate):</strong> This prevention (or mitigation) phase involves taking actions to reduce or eliminate risks and hazards before they happen.</li>
+        <li><strong>Preparedness:</strong>The preparedness phase involves developing plans and procedures to ensure schools are ready to respond to emergencies.</li>
+        <li><strong>Respond:</strong> 
+            The response phase takes place during an actual emergency, when schools take immediate action to protect students, staff, and visitors.
+            </li>
+        <li><strong>Recovery:</strong> 
+            The recovery phase happens after the immediate emergency is over, and is focused on restoring the physical environment, and supporting students, families, and employees to return to learning routines as soon as possible.
+            </li>
+    </ul>
+    <h3>Climate Readiness at San Mateo County Office of Education:</h3>
+    <p>The San Mateo County Office of Education has begun to adopt a “climate ready mindset” into their emergency planning, which is rooted in their understanding of how critical this climate readiness is for the preparedness phase.</p>
+    <p>Check out their story in the <a href="URL_to_the_April_2024_Open_Door_webinar" target="_blank">April 2024 Open Door webinar (30:30 - 40:30)</a>, and in the <a href="URL_to_the_May_2024_Spotlight_feature" target="_blank">May 2024 Spotlight feature: Climate Change and Emergency Management at SMCOE</a>.</p>
+</body>`;
         } else if (topConcern === 'sea_level_rise') {
-            resourcesDiv.innerHTML = "<p>Resource about Sea Level Rise...</p>";
+            resourcesDiv.innerHTML = `<h1> Sea Level Rise Resources</h1>
+            <h3>Readiness and Emergency Management for Schools (REMS) Phases of Emergency Planning</h3>
+    
+    It is recommended to consider all of the Readiness and Emergency Management for Schools (REMS) phases of emergency planning for each impact:
+    <ul>
+        <li><strong>Prevent (Mitigate):</strong> This prevention (or mitigation) phase involves taking actions to reduce or eliminate risks and hazards before they happen.</li>
+        <li><strong>Preparedness:</strong>The preparedness phase involves developing plans and procedures to ensure schools are ready to respond to emergencies.</li>
+        <li><strong>Respond:</strong> 
+            The response phase takes place during an actual emergency, when schools take immediate action to protect students, staff, and visitors.
+            </li>
+        <li><strong>Recovery:</strong> 
+            The recovery phase happens after the immediate emergency is over, and is focused on restoring the physical environment, and supporting students, families, and employees to return to learning routines as soon as possible.
+            </li>
+    </ul>
+            `;
         } else {
-            resourcesDiv.innerHTML = "<p>No specific resources available for this concern.</p>";
+            resourcesDiv.innerHTML =`<h1> No Resources Available</h1>`;
         }
     </script>
 </body>
 </html>
+
 
