@@ -18,6 +18,7 @@
     <form action="/fetch-county" method="GET">
         <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
         <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
         <button type="submit" class="bttn">Back</button>
     </form>
 </div>

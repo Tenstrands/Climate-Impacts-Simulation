@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Narrative 2025</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Global Narrative 2025</h1>
+
+    <!-- Display the result -->
+    <div id="text">
+        Climate change is affecting all areas of life, in ways big and small, for people around the world. Communities are facing agricultural challenges, massive migration, and ecosystem instability. 
+
+        Globally, food systems are struggling to support a planet of 8.2 billion people as food systems continue to use unsustainable practices. Hotter temperatures are shifting regions where certain foods can be grown. Conditions such as longer dry periods and heavier rainfall are inviting new pests and making it difficult for farmers across the world to keep their crops alive and healthy. 
+        
+        U.S. national security experts recognize that environmental damage and climate change will impact human security challenges, threaten public health, and lead to historic levels of human displacement. Climate-related natural disasters are displacing 25 million people both internally and across national borders. Sea level rise continues to inundate communities causing infrastructure damage, stormwater issues, and groundwater salinization. 
+        
+        We are in a human-caused mass extinction on a scale that has occurred only five other times (due to natural elements) in the 4.5 billion year history of the earth. California is home to one of 36 worldwide biodiversity hotspots, where thousands of species are only found in this area (and nowhere else) and over 70% of the habitat has already been lost. 1 million plant and animal species are threatened by extinction, many of which are expected to become extinct within the next 10 years.
+    </div>
+
+    <form action="/fetch-county" method="GET">
+        <input type="hidden" name="county" value="<%= encodeURIComponent(selectedCounty) %>">
+        <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
+        <button type="submit" class="bttn">Next</button>
+    </form>
+</div>
+</body>
+</html>

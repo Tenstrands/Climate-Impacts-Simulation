@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { fetchSheetData, getDataForCounty } = require('./googleSheetsHelper');
+const { fetchSheetData, getDataForCounty, getNarrative } = require('./googleSheetsHelper');
 const app = express();
 const port = 3000;
 
@@ -35,7 +35,29 @@ app.post('/set-county', (req, res) => {
     const selectedCounty = req.body.county;  // Get the selected county from the form  
     const selectedYear = req.body.year;
     const selectedBiome = req.body.biome;
-    res.redirect(`/fetch-county?county=${encodeURIComponent(selectedCounty)}&biome=${encodeURIComponent(selectedBiome)}&year=${encodeURIComponent(selectedYear)}`);
+    res.redirect(`/global-narrative?county=${encodeURIComponent(selectedCounty)}&biome=${encodeURIComponent(selectedBiome)}&year=${encodeURIComponent(selectedYear)}`);
+  });
+
+app.get('/global-narrative', async (req, res) => {
+    const selectedCounty = req.query.county;  
+    const selectedYear = req.query.year;
+    const selectedBiome = req.query.biome;
+    switch(selectedYear) {
+        case "2025":
+            res.render('2025_global_narrative', { selectedCounty, selectedBiome, selectedYear });
+            break;
+        case "2035":
+            res.render('2035_global_narrative', { selectedCounty, selectedBiome, selectedYear });
+            break;
+        case "2045":
+            res.render('2045_global_narrative', { selectedCounty, selectedBiome, selectedYear });
+            break;
+        case "2055":
+            res.render('2055_global_narrative', { selectedCounty, selectedBiome, selectedYear });
+            break;
+        default:
+            throw new Error(`Invalid year selected: ${selectedYear}`);
+    }   
   });
 
 //get data for county description 
@@ -62,44 +84,60 @@ app.get('/fetch-county', async (req, res) => {
 app.get('/county_description', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
+    const selectedBiome = req.query.biome
     const selectedYear = req.query.year;
-
-    res.render('county_description', { county, selectedYear, result });
+    res.render('county_description', { county, selectedYear, selectedBiome, result });
 });
 
 //get info for high heat route
 app.get('/fetch-high-heat', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
     const selectedYear = req.query.year;
-    const range = "COUNTY High Heat!A2:T";  // Change this range as necessary
-
+    const selectedBiome = req.query.biome;
+    const impactType = "High Heat"
+    let range = "COUNTY High Heat!A2:U";  // Change this range as necessary
     try {
-        const rows = await fetchSheetData(range);
+        // console.log('Selected County:', selectedCounty);
+        // console.log('Selected Year:', selectedYear);
+        // console.log('Selected Biome:', selectedBiome);
+        // console.log('Selected Impact:', impactType);
+
+        let rows = await fetchSheetData(range);
+        let impactLevel = getDataForCounty(rows, selectedCounty, 20)
+        // console.log('Impact Level:', impactLevel);
+
         let result;
         switch(selectedYear) {
             case "2025":
-                result = getDataForCounty(rows, selectedCounty, 16);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2035":
-                result = getDataForCounty(rows, selectedCounty, 17);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2045":
-                result = getDataForCounty(rows, selectedCounty, 18);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2055":
-                result = getDataForCounty(rows, selectedCounty, 19);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             default:
                 throw new Error(`Invalid year selected: ${selectedYear}`);
-
         }   
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -107,8 +145,9 @@ app.get('/fetch-high-heat', async (req, res) => {
 app.get('/high_heat', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
-    const selectedYear = req.query.year
-    res.render('high_heat', { county, selectedYear, result });
+    const selectedYear = req.query.year;
+    const selectedBiome = req.query.biome;
+    res.render('high_heat', { county, selectedYear, result, selectedBiome });
 });
 
 
@@ -116,34 +155,51 @@ app.get('/high_heat', (req, res) => {
 app.get('/fetch-sea-level-rise', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
     const selectedYear = req.query.year;
-    const range = "COUNTY Sea Level Rise!A2:L";  // Change this range as necessary
-
+    const selectedBiome = req.query.biome;
+    const impactType = "Sea Level Rise"
+    let range = "COUNTY Sea Level Rise!A2:H";  // Change this range as necessary
     try {
-        const rows = await fetchSheetData(range);
+        console.log('Selected County:', selectedCounty);
+        console.log('Selected Year:', selectedYear);
+        console.log('Selected Biome:', selectedBiome);
+        console.log('Selected Impact:', impactType);
+
+        let rows = await fetchSheetData(range);
+        let impactLevel = getDataForCounty(rows, selectedCounty, 7)
+        console.log('Impact Level:', impactLevel);
+
         let result;
         switch(selectedYear) {
             case "2025":
-                result = getDataForCounty(rows, selectedCounty, 8);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2035":
-                result = getDataForCounty(rows, selectedCounty, 9);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2045":
-                result = getDataForCounty(rows, selectedCounty, 10);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2055":
-                result = getDataForCounty(rows, selectedCounty, 11);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             default:
                 throw new Error(`Invalid year selected: ${selectedYear}`);
+        }   
 
-        }
-
-        res.redirect(`/sea_level_rise?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
+        // Redirect the user to the "high_heat" page with the result
+        res.redirect(`/sea_level_rise?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/sea_level_rise?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/sea_level_rise?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -152,44 +208,62 @@ app.get('/sea_level_rise', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
     const selectedYear = req.query.year;
+    const selectedBiome = req.query.biome;
 
-    res.render('sea_level_rise', { county, result, selectedYear });
+
+    res.render('sea_level_rise', { county, result, selectedYear, selectedBiome });
 });
 
 
 //get info for precipitation_and_storms route
 app.get('/fetch-precipitation-and-storms', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
-    const range = "COUNTY Precipitation and Storms!A2:AF";  // Change this range as necessary
     const selectedYear = req.query.year;
-
+    const selectedBiome = req.query.biome;
+    const impactType = "Precipitation and Rainstorms"
+    let range = "COUNTY Precipitation and Storms!A2:AC";  // Change this range as necessary
     try {
-        const rows = await fetchSheetData(range);
+        console.log('Selected County:', selectedCounty);
+        console.log('Selected Year:', selectedYear);
+        console.log('Selected Biome:', selectedBiome);
+        console.log('Selected Impact:', impactType);
+
+        let rows = await fetchSheetData(range);
+        let impactLevel = getDataForCounty(rows, selectedCounty, 28)
+        console.log('Impact Level:', impactLevel);
+
         let result;
         switch(selectedYear) {
             case "2025":
-                result = getDataForCounty(rows, selectedCounty, 28);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2035":
-                result = getDataForCounty(rows, selectedCounty, 29);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2045":
-                result = getDataForCounty(rows, selectedCounty, 30);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2055":
-                result = getDataForCounty(rows, selectedCounty, 31);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             default:
                 throw new Error(`Invalid year selected: ${selectedYear}`);
-
-        }
+        }   
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/precipitation_and_storms?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -198,42 +272,60 @@ app.get('/precipitation_and_storms', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
     const selectedYear = req.query.year;
-    res.render('precipitation_and_storms', { county, result, selectedYear });
+    const selectedBiome = req.query.biome;
+
+    res.render('precipitation_and_storms', { county, result, selectedYear, selectedBiome });
 });
 
 //get info for wildfires route
 app.get('/fetch-wildfires', async (req, res) => {
     const selectedCounty = req.query.county;  // Get the selected county from query parameter
-    const range = "COUNTY Wildfires!A2:U";  // Change this range as necessary
     const selectedYear = req.query.year;
-
+    const selectedBiome = req.query.biome;
+    const impactType = "Wildfire"
+    let range = "COUNTY Wildfires!A2:R";  // Change this range as necessary
     try {
-        const rows = await fetchSheetData(range);
+        console.log('Selected County:', selectedCounty);
+        console.log('Selected Year:', selectedYear);
+        console.log('Selected Biome:', selectedBiome);
+        console.log('Selected Impact:', impactType);
+
+        let rows = await fetchSheetData(range);
+        let impactLevel = getDataForCounty(rows, selectedCounty, 17)
+        console.log('Impact Level:', impactLevel);
+
         let result;
         switch(selectedYear) {
             case "2025":
-                result = getDataForCounty(rows, selectedCounty, 17);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2035":
-                result = getDataForCounty(rows, selectedCounty, 18);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2045":
-                result = getDataForCounty(rows, selectedCounty, 19);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             case "2055":
-                result = getDataForCounty(rows, selectedCounty, 20);
+                range = "Narratives 2025!A2:D";
+                rows = await fetchSheetData(range);
+                result = getNarrative(rows, selectedBiome, impactLevel, impactType);
                 break;
             default:
                 throw new Error(`Invalid year selected: ${selectedYear}`);
-
-        }
+        }   
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/wildfires?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/wildfires?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
-        res.redirect(`/wildfires?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&result=${encodeURIComponent("Error fetching data")}`);
+        res.redirect(`/wildfires?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent("Error fetching data")}`);
     }
 });
 
@@ -242,14 +334,17 @@ app.get('/wildfires', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const result = req.query.result; // Get result from query parameter
     const selectedYear = req.query.year;
-    res.render('wildfires', { county, result, selectedYear });
+    const selectedBiome = req.query.biome;
+
+    res.render('wildfires', { county, result, selectedYear, selectedBiome });
 });
 
 // Route for reflection
 app.get('/reflection', (req, res) => {
     const county = req.query.county; // Get county from query parameter
     const selectedYear = req.query.year;
-    res.render('reflection', { county, selectedYear });
+    const selectedBiome = req.query.biome;
+    res.render('reflection', { county, selectedYear, selectedBiome });
 });
 
 
@@ -320,6 +415,26 @@ app.post('/store-sentiment', async (req, res) => {
 app.get('/dashboard', (req, res) => {
     res.render('dashboard');
 });
+
+
+
+// Route to dashboard page
+// app.get('/dashboard', (req, res) => {
+//     // #need to get impact level
+//     let range = "Resources!A2:C";
+//     let rows = await fetchSheetData(range);
+//     for (const row of rows) {
+//         if (row[0] === impactType) {  // Assuming county is in the first column (A)
+//         let impact_resources = row[1];  // Get the value from the specified column
+//         break;
+//         }
+//     }
+//     res.render('dashboard');
+// });
+
+
+
+
 
 // Start the server
 app.listen(port, () => {

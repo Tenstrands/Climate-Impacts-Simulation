@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Narrative 2055</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Global Narrative 2055</h1>
+
+    <!-- Display the result -->
+    <div id="text">
+        With 10 billion people now inhabiting the earth, we are now far outstripping the earth&#39;s capacity to sustain us. Several ecosystems have collapsed, causing political conflict as countries utilize military force and economic might to protect natural resources for their own populations. 
+
+        Extreme drought plagues cities and towns the world over from sub-saharan Africa and the Middle East to Iowan farmers in the U.S. Despite having wetter winters, the California Sierra Mountain Range has lost 50% of its snowpack, jeopardizing basic water needs for millions of residents. 
+
+        Marine ecosystems across the world are suffering from multiple impacts - warming temperatures, ocean acidification, disease spread, coral bleaching, plastic pollution (among others). The Australian Great Barrier Reef, whose decline had been widely documented and discussed, finally died. Paired with extreme drought and wildfires, Australia&#39;s economy (mirroring many others across the world) is in peril. 
+
+        Island nations like Kiribati have gone underwater while millions in coastal communities recede inland. With geopolitical tensions rising high and increased anxiety, the world&#39;s 200 million climate migrants struggle to find homes. 
+
+        Half of all species of plants and animals on earth have gone extinct, reaching the tens of millions. Future generations will never get to see incredible, beloved species (Bengal tigers, elephants, rhinos) as it will take millions of years for the planet to recover.
+    </div>
+
+    <form action="/fetch-county" method="GET">
+        <input type="hidden" name="county" value="<%= encodeURIComponent(selectedCounty) %>">
+        <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
+        <button type="submit" class="bttn">Next</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Narrative 2035</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Global Narrative 2035</h1>
+
+    <!-- Display the result -->
+    <div id="text">
+        Our planet now supports 8.9 billion people, and the impacts of climate change continue to reach more communities across the world, increasing in severity. 
+
+        Farm land (arable cropland) is being lost to desertification, erosion, sea level rise and soil loss. Droughts continue to challenge agricultural communities around the world while pests have become more severe - consuming 5-20% of major crops worldwide. California now experiences longer dry spells and warmer winters with fewer chill hours for crops. There is reduced groundwater availability and certain orchard industries have moved out of state in search of cooler temperatures. It has become increasingly difficult to consistently meet the nutritional needs of the human population - 1 billion people go hungry. 
+        
+        The countries least responsible for the climate crisis, with the lowest ability to recover from disaster, (i.e. Haiti, The Philippines, Cambodia, Nigeria, Ethiopia, and Bangladesh) continue to experience extreme weather patterns including hurricanes and storms. 50 million people are displaced from their homes with some unable to return. Some people in counties most vulnerable to sea level rise have decided to relocate from vulnerable areas.
+        
+        Changing climates and extreme weather events have pushed more species to extinction - over three quarters of a million plant and animal species are no longer alive on our planet. The rate of this mass extinction is happening 10 to 100 times faster than the previous five mass extinctions. Millions of other species have been added to threatened and endangered lists.
+    </div>
+
+    <form action="/fetch-county" method="GET">
+        <input type="hidden" name="county" value="<%= encodeURIComponent(selectedCounty) %>">
+        <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
+        <button type="submit" class="bttn">Next</button>
+    </form>
+</div>
+</body>
+</html>

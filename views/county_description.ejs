@@ -18,30 +18,37 @@
 <form action="/fetch-high-heat" method="GET">
     <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
     <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+    <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
     <button type="submit" class="button-4">High Heat</button>
 </form>
 
 <form action="/fetch-sea-level-rise" method="GET">
     <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
     <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+    <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
+
     <button type="submit" class="button-4">Sea Level Rise</button>
 </form>
 
 <form action="/fetch-precipitation-and-storms" method="GET">
     <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
     <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+    <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
+
     <button type="submit" class="button-4">Precipitation and Storms</button>
 </form>
 
 <form action="/fetch-wildfires" method="GET">
     <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
     <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+    <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
     <button type="submit" class="button-4">Wildfires</button>
 </form>
 
 <form action="/sentiment" method="GET">
     <input type="hidden" name="county" value="<%= encodeURIComponent(county) %>">
     <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+    <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
     <button type="submit" class="bttn">Next</button>
 </form>
 

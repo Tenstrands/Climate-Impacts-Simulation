@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Narrative 2045</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Global Narrative 2045</h1>
+
+    <!-- Display the result -->
+    <div id="text">
+        The planet&#39;s population has now reached 9.5 billion people with climate impacts causing increasing ecological, political and economic instability. 
+
+        Drought and groundwater shortages are causing hunger and famine. As conditions for growing food worsen, cereal (wheat, rice and maize) prices increase adding to the 1.5 billion people already suffering from hunger. The effects of unsustainable farming practices (nutrient runoff, drinking water pollution, monocropping) that have been mounting for decades finally hit ecological tipping points - California coastal fish species are experiencing catastrophic die offs.
+        
+        Smallholder farms and agricultural communities around the world suffer as traditional foods and staple crops fail under pressure from high heat and soil nutrient deficiency. In Latin America alone, millions of people whose livelihoods depend on farming are now climate migrants. As the world's 100 million climate migrants start to cross borders, communities are unprepared for the influx, and societies are strained - in some cases sparking violence and political collapse. Marine and inland fisheries, together with aquaculture, provide food, nutrition and a source of income to almost one billion people around the world, from harvesting, processing, marketing and distribution. Overfishing, plastic pollution, and ocean acidification have depleted a majority of fish stocks - further contributing to hunger and migration. 
+        
+        Three million species on earth have now gone extinct. Human population increase, land development, and resource consumption join climate change in destroying habitats and weakening ecosystems that provide us with critical services such as freshwater filtration through watersheds and production of food and materials. With less species and diminished biodiversity, already weakened ecosystems are even more susceptible to collapse from the impacts of a drastically changing climate.
+    </div>
+
+    <form action="/fetch-county" method="GET">
+        <input type="hidden" name="county" value="<%= encodeURIComponent(selectedCounty) %>">
+        <input type="hidden" name="year" value="<%= encodeURIComponent(selectedYear) %>">
+        <input type="hidden" name="biome" value="<%= encodeURIComponent(selectedBiome) %>">
+        <button type="submit" class="bttn">Next</button>
+    </form>
+</div>
+</body>
+</html>

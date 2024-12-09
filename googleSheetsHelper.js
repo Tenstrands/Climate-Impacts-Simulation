@@ -27,7 +27,7 @@ async function fetchSheetData(range) {
     }
 }
 
-// Helper function to extract data for a specific county or condition
+// Helper function to extract impact level/biomes for a specific county or condition
 const getDataForCounty = (rows, county, resultColumnIndex) => {
     let result = null;
     for (const row of rows) {
@@ -39,8 +39,22 @@ const getDataForCounty = (rows, county, resultColumnIndex) => {
     return result;
   };
 
+
+  // Helper function to extract impact level/biomes for a specific county or condition
+const getNarrative = (rows, biome, riskLevel, impactType) => {
+    let result = null;
+    for (const row of rows) {
+      if (row[0] === biome && row[1] === impactType && row[2] === riskLevel) {  
+        result = row[3];  // Get the value from the specified column
+        break;
+      }
+    }
+    return result;
+  };
+
 // Export the function to use it in other files
 module.exports = {
     fetchSheetData,
-    getDataForCounty
+    getDataForCounty,
+    getNarrative
 };
