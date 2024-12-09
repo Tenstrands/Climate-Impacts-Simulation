@@ -104,7 +104,8 @@ app.get('/fetch-high-heat', async (req, res) => {
 
         let rows = await fetchSheetData(range);
         let impactLevel = getDataForCounty(rows, selectedCounty, 20)
-        // console.log('Impact Level:', impactLevel);
+        let high_heat_threshold = getDataForCounty(rows, selectedCounty, 3)
+        console.log('High Heat Level:', high_heat_threshold);
 
         let result;
         switch(selectedYear) {
@@ -133,7 +134,7 @@ app.get('/fetch-high-heat', async (req, res) => {
         }   
 
         // Redirect the user to the "high_heat" page with the result
-        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&result=${encodeURIComponent(result || "No result found")}`);
+        res.redirect(`/high_heat?county=${selectedCounty}&year=${encodeURIComponent(selectedYear)}&biome=${encodeURIComponent(selectedBiome)}&high_heat_threshold=${encodeURIComponent(high_heat_threshold)}&result=${encodeURIComponent(result || "No result found")}`);
 
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
@@ -147,7 +148,9 @@ app.get('/high_heat', (req, res) => {
     const result = req.query.result; // Get result from query parameter
     const selectedYear = req.query.year;
     const selectedBiome = req.query.biome;
-    res.render('high_heat', { county, selectedYear, result, selectedBiome });
+    const high_heat_threshold = req.query.high_heat_threshold;
+    console.log('High Heat Level:', high_heat_threshold);
+    res.render('high_heat', { county, selectedYear, result, selectedBiome, high_heat_threshold });
 });
 
 
